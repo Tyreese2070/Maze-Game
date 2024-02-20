@@ -1,0 +1,13 @@
+/*
+ * FOne 
+ * Author: Tyreese Green
+ */
+
+CHIP FOne {
+   IN A, B, C, D;
+   OUT F, G;
+
+   PARTS:
+   And(a=A, b=C, out=F);
+   And(a=B, b=D, out=G);
+}
