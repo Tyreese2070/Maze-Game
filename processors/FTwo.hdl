@@ -3,7 +3,7 @@
  * Author: Tyreese Green
  */
 
-CHIP FOne {
+CHIP FTwo {
    IN A, B, C, D;
    OUT F, G;
 
