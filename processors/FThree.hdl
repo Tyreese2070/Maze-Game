@@ -1,0 +1,66 @@
+/*
+ * FThree
+ * Author: Tyreese Green
+ */
+
+CHIP FThree {
+   IN A, B, C, D;
+   OUT F, G, E;
+
+   PARTS:
+   // OUT E
+   And(a=A, b=B, out=E00);
+   And(a=D, b=E00, out=E01);
+
+   And(a=B, b=C, out=E10);
+   And(a=D, b=E10, out=E11);
+
+   And(a=A, b=C, out=E20);
+
+   Or(a=E01, b=E11, out=E30);
+   Or(a=E30, b=E20, out=E);
+   
+   // OUT G
+   Not(in=B, out=notB);
+
+   And(a=B, b=notD, out=G00);
+   And(a=D, b=notB, out=G10);
+   Or(a=G00, b=G10, out=G);
+   
+
+   // OUT F
+   Not(in=A, out=notA);
+
+   And(a=notA, b=C, out=F00);
+   And(a=F00, b=notB, out=F01);
+
+   Not(in=C, out=notC);
+
+   Not(in=D, out=notD);
+   
+   And(a=A, b=notC, out=F10);
+   And(a=F10, b=notD, out=F11);
+
+   And(a=notC, b=A, out=F20);
+   And(a=F20, b=notB, out=F21);
+
+   And(a=notA, b=C, out=F30);
+   And(a=F30, b=notD, out=F31);
+
+   And(a=notA, b=B, out=F40);
+   And(a=notC, b=D, out=F41);
+   And(a=F40, b=F41, out=F42);
+
+   And(a=A, b=B, out=F50);
+   And(a=C, b=D, out=F51);
+   And(a=F50, b=F51, out=F52);
+
+   Or(a=F01, b=F11, out=F60);
+   Or(a=F21, b=F31, out=F61);
+   Or(a=F42, b=F52, out=F62);
+   Or(a=F60, b=F61, out=F63);
+   Or(a=F63, b=F62, out=F);
+   
+   
+   
+}
