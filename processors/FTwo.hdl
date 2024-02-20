@@ -1,7 +1,7 @@
 /*
  * FTwo 
  * Author: Tyreese Green
- */ A OR C = F, G = B OR D
+ */
 
 CHIP FOne {
    IN A, B, C, D;
