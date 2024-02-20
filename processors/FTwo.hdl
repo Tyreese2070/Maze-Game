@@ -1,0 +1,13 @@
+/*
+ * FTwo 
+ * Author: Tyreese Green
+ */ A OR C = F, G = B OR D
+
+CHIP FOne {
+   IN A, B, C, D;
+   OUT F, G;
+
+   PARTS:
+   Or(a=A, b=C, out=F);
+   Or(a=B, b=D, out=G);
+}
