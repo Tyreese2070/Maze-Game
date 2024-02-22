@@ -43,12 +43,25 @@ int main(char argc, char *argv[])
     // read in the maze file
 
     // Validate maze file
+        /*
+        Same Column length
+        Same row length
+        Contains only ' ', '#', 'S', 'E'
+        Only one 'S', 'E'
+        Don't have to be solvable
+        */
 
     // Display the maze
+        // Display user as X
 
     // Check for user input
 
-    // Check for game events
+    // Check for game events after movement
+        /*
+        Check for walls
+        Check for spaces
+        Check for 'M'  key for map
+        */
 
     // Quit the game
     return 0;
