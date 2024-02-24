@@ -24,18 +24,27 @@ void moveCharacter(char userInput){
 void getMaze(){
 }
 
-// View an image of the map
+// View the map
 void viewMap(){
 }
 
-// Main with command line args
-int main(char argc, char *argv[])
+// Validate the maze
+int validateMaze(){
+    int valid = 1;
+
+    if(valid==0){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+// Main - inputs should be mazefile.txt
+int main(int argc, char *argv[])
 {
     // Get username
     char username[20];
-    printf("Enter a username: ");
-    scanf("%s", &username);
-    struct Player player = {username, 0};
 
     // Declare an array for the player
     // Declare an array for the maze
@@ -60,9 +69,16 @@ int main(char argc, char *argv[])
         /*
         Check for walls
         Check for spaces
-        Check for 'M'  key for map
+        Check for 'M' key for map
         */
 
     // Quit the game
+
+    if (argc != 2)
+    {
+        printf("Invalid input\n");
+    }
+
+
     return 0;
 }
