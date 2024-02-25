@@ -79,6 +79,8 @@ int main(int argc, char *argv[])
         printf("Invalid input\n");
     }
 
+    printf("########\n##X   E#\n####  ##\n#####   \n########\n");
+
 
     return 0;
 }
