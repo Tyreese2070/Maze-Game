@@ -1,0 +1,20 @@
+# Test 8 - 
+echo -n "8. exact character test: "
+./maze tests/invalidmaps/noend.txt > tmp
+if grep -wq "AAA" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+    cat tmp
+fi
+
+echo -n "9. File comparison test: "
+./maze tests/invalidmaps/noend.txt > tmp
+if grep -wq -f tests/test1/test1Output.txt tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+    cat tmp
+fi

@@ -72,15 +72,13 @@ int main(int argc, char *argv[])
         Check for 'M' key for map
         */
 
+    // Return user message (Win or lose)
     // Quit the game
 
     if (argc != 2)
     {
         printf("Invalid input\n");
     }
-
-    printf("########\n##X   E#\n####  ##\n#####   \n########\n");
-
 
     return 0;
 }

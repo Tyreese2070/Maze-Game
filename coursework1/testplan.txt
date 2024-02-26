@@ -1,0 +1,28 @@
+Args
+1. Checking for no input
+2. Too many Args
+
+FILE I/O 
+1. Incorrect filetype - Should be .txt
+2. No start point
+3. No end point
+4. Invalid map characters
+5-8. Invalid width/height 5<width/height<100
+9. Unequal row lengths
+10. Unequal column lengths
+11. Successfully loads valid maze
+
+User input
+1-4. User movement (up, down, left, right) (W,S,A,D)
+5. Invalid input
+6. Map displays on M key
+
+Game functionality
+1. User hits wall
+2. User exits maze
+3. User starts at correct point
+
+TODO: 
+Map open test
+User movement Testing
+User starts at correct point
