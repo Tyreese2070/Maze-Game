@@ -163,29 +163,39 @@ echo
 echo "-----Testing user input-----"
 
 # Test 1 - Player moves up
-
-# Test 2 - Player moves left
-
-# Test 3 - Player moves down
-echo -n "3. Player moves down: "
-echo "s" | echo "m" | ./maze tests/validmaps/validmap1.txt > tmp
-if grep -q "#     E  #" tmp;
+echo -n "4. Player moves right: "
+if grep -Fqx -f tests/validmaps/movementoutputs/uptest.txt tmp;
 then
     echo "PASS"
 else
     echo "FAIL"
-    cat tmp 
+fi
+
+# Test 2 - Player moves left
+echo -n "4. Player moves right: "
+if grep -Fqx -f tests/validmaps/movementoutputs/lefttest.txt tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+# Test 3 - Player moves down
+echo -n "3. Player moves down: "
+if grep -Fqx -f tests/validmaps/movementoutputs/downtest.txt tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
 fi
 
 # Test 4 - player moves right 
 echo -n "4. Player moves right: "
-echo "d" | echo "m" | ./maze tests/validmaps/validmap1.txt > tmp
-if grep -q "#   X E  #" tmp;
+if grep -Fqx -f tests/validmaps/movementoutputs/righttest.txt tmp;
 then
     echo "PASS"
 else
     echo "FAIL"
-    cat tmp 
 fi
 
 # Test 5 - invalid input
@@ -199,15 +209,14 @@ else
     cat tmp 
 fi
 
-# Test 6 - Map displays correctly !! Check later
+# Test 6 - Map displays correctly
 echo -n "6. Map displays on 'M' key: "
 echo "m" | ./maze tests/validmaps/validmap2.txt > tmp
-if grep -Fxq -f tests/validmaps/validmap2.txt -q tmp;
+if grep -Fqx -f tests/validmaps/maptest.txt tmp;
 then
     echo "PASS"
 else
     echo "FAIL"
-    cat tmp 
 fi
 
 echo

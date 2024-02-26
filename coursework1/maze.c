@@ -80,5 +80,32 @@ int main(int argc, char *argv[])
         printf("Invalid input\n");
     }
 
+    printf("Input: d\n");
+    
+    printf("##########\n")
+    printf("#  X     #\n")
+    printf("#     E  #\n")
+    printf("#        #\n")
+    printf("#        #\n")
+    printf("#        #\n")
+    printf("#        #\n")
+    printf("#        #\n")
+    printf("##########\n")
+    
+
+    /*
+    printf("##########\n"
+            "#  X     #\n"
+            "#     E  #\n"
+            "#        #\n"
+            "#        #\n"
+            "#        #\n"
+            "#        #\n"
+            "#        #\n"
+            "##########\n");
+    */
+
+
+
     return 0;
 }
