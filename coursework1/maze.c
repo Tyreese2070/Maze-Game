@@ -6,106 +6,83 @@
 struct Maze{
     int width;
     int height;
-    char mazeLayout;
+    char *map;
     char filepath[50];
 };
 
-struct Player{
-    char username[20];
-    int playerPosition;
-
-};
-
-// Move the user
+// Move the user based on input
 void moveCharacter(char userInput){
+    // 'W' or 'w'- UP
+    // 'A' or 'a'- LEFT
+    // 'S' or 's' - DOWN
+    // 'D' or 'd' - RIGHT
 }
 
 // Load maze file
-void getMaze(){
+void loadMaze(){
+    // load maze and store to struct
+
+    // read in line by line
+
+    // Store each line
+
+    // Close file
 }
 
 // View the map
 void viewMap(){
+    // Print out map from struct
 }
 
 // Validate the maze
 int validateMaze(){
-    int valid = 1;
-
-    if(valid==0){
-        return 1;
-    }
-    else{
-        return 0;
-    }
+    /*
+    Same Column length
+    Same row length
+    Contains only ' ', '#', 'S', 'E'
+    Only one 'S', 'E'
+    Don't have to be solvable
+    */
 }
 
 // Main - inputs should be mazefile.txt
 int main(int argc, char *argv[])
 {
-    // Get username
-    char username[20];
 
-    // Declare an array for the player
-    // Declare an array for the maze
+    // Declare struct for the maze
 
-    // read in the maze file
-
-    // Validate maze file
-        /*
-        Same Column length
-        Same row length
-        Contains only ' ', '#', 'S', 'E'
-        Only one 'S', 'E'
-        Don't have to be solvable
-        */
-
-    // Display the maze
-        // Display user as X
-
-    // Check for user input
-
-    // Check for game events after movement
-        /*
-        Check for walls
-        Check for spaces
-        Check for 'M' key for map
-        */
-
-    // Return user message (Win or lose)
-    // Quit the game
-
+    // Validate filetype and args
     if (argc != 2)
     {
         printf("Invalid input\n");
     }
 
-    printf("Input: d\n");
-    
-    printf("##########\n")
-    printf("#  X     #\n")
-    printf("#     E  #\n")
-    printf("#        #\n")
-    printf("#        #\n")
-    printf("#        #\n")
-    printf("#        #\n")
-    printf("#        #\n")
-    printf("##########\n")
-    
+    // read in the maze file
+        // Replace start point with "X"
 
-    /*
-    printf("##########\n"
-            "#  X     #\n"
-            "#     E  #\n"
-            "#        #\n"
-            "#        #\n"
-            "#        #\n"
-            "#        #\n"
-            "#        #\n"
-            "##########\n");
-    */
+    // Validate maze file
+
+    // Display the maze
+        // Print out map file line by line
 
 
+    // Gameplay loop
+
+        // Check for user input, include lower and uppercase for each character
+
+            // Do user action based on input
+                // 'M' key for map
+                // Standard movement keys (WASD) move the character
+                // 'Q' key for quit
+
+        // Check for game events after movement
+            /*
+            Check for walls
+            Check for spaces
+            Check for Exit - Return win message and end loop
+            */
+
+    // Quit the game
 
     return 0;
 }
