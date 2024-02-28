@@ -7,7 +7,7 @@ struct Maze{
     int width;
     int height;
     char *map;
-    char filepath[50];
+    char filepath[150];
 };
 
 // Move the user based on input
