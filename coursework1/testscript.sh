@@ -274,10 +274,10 @@ fi
 
 echo
 echo "-----Testing valid maps-----"
-# Testing various valid map files
+# Testing various valid map files + moves to the exit - Expectation: User wins message
 
 echo -n "Maze map 1: "
-./maze tests/validmaps/validmap3.txt > tmp
+./maze tests/validmaps/validmap3.txt < tests/validmaps/inputs/map3in.txt > tmp
 if grep -q "Map loaded successfully" tmp;
 then
     echo "PASS"
@@ -287,7 +287,7 @@ else
 fi
 
 echo -n "Maze map 2: "
-./maze tests/validmaps/validmap4.txt > tmp
+./maze tests/validmaps/validmap4.txt < tests/validmaps/inputs/map4in.txt > tmp
 if grep -q "Map loaded successfully" tmp;
 then
     echo "PASS"
@@ -297,7 +297,7 @@ else
 fi
 
 echo -n "Maze map 3: "
-./maze tests/validmaps/validmap5.txt > tmp
+./maze tests/validmaps/validmap5.txt < tests/validmaps/inputs/map5in.txt > tmp
 if grep -q "Map loaded successfully" tmp;
 then
     echo "PASS"
@@ -307,7 +307,7 @@ else
 fi
 
 echo -n "Maze map 4: "
-./maze tests/validmaps/validmap6.txt > tmp
+./maze tests/validmaps/validmap6.txt < tests/validmaps/inputs/map6in.txt > tmp
 if grep -q "Map loaded successfully" tmp;
 then
     echo "PASS"
@@ -317,7 +317,7 @@ else
 fi
 
 echo -n "Maze map 5: "
-./maze tests/validmaps/validmap7.txt > tmp
+./maze tests/validmaps/validmap7.txt < tests/validmaps/inputs/map7in.txt > tmp
 if grep -q "Map loaded successfully" tmp;
 then
     echo "PASS"
@@ -326,7 +326,7 @@ else
     cat tmp
 fi
 
-# Testing max height and width
+# Testing max height and width - Map should load successfully
 echo -n "Big maze map: "
 ./maze tests/validmaps/validmapMax.txt > tmp
 if grep -q "Map loaded successfully" tmp;
