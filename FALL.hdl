@@ -14,12 +14,16 @@ CHIP FALL {
     // Mux for F
     Mux(a=Fzero, b=Fone, sel=f0, out=ab_f);
     Mux(a=Ftwo, b=Fthree, sel=f0, out=cd_f);
-    Mux(a=ab_f, b=cd_f, sel=f1, out=F);
+    Mux(a=ab_f, b=cd_f, sel=f1, out=F_intermediate); // Intermediate output for F
 
     // Mux for G
     Mux(a=Gzero, b=Gone, sel=f0, out=ab_g);
     Mux(a=Gtwo, b=Gthree, sel=f0, out=cd_g);
-    Mux(a=ab_g, b=cd_g, sel=f1, out=G);
+    Mux(a=ab_g, b=cd_g, sel=f1, out=G_intermediate); // Intermediate output for G
+
+    // Final Mux for F and G
+    Mux(a=F_intermediate, b=true, sel=f1, out=F);
+    Mux(a=G_intermediate, b=true, sel=f1, out=G);
 
     // Define outputs
     // OUT E
