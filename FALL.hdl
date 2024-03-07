@@ -1,0 +1,61 @@
+/*
+ * FALL
+ * Author: Tyreese Green
+ */
+
+CHIP FALL {
+    IN A, B, C, D, f0, f1;
+    OUT F, G, E;
+
+    PARTS:
+    Not(in=C, out=notC);
+    Not(in=D, out=notD);
+
+    // Mux for F
+    Mux(a=Fzero, b=Fone, sel=f0, out=ab_f);
+    Mux(a=Ftwo, b=Fthree, sel=f0, out=cd_f);
+    Mux(a=ab_f, b=cd_f, sel=f1, out=F);
+
+    // Mux for G
+    Mux(a=Gzero, b=Gone, sel=f0, out=ab_g);
+    Mux(a=Gtwo, b=Gthree, sel=f0, out=cd_g);
+    Mux(a=ab_g, b=cd_g, sel=f1, out=G);
+
+    // Define outputs
+    // OUT E
+    And(a=A, b=B, out=E00);
+    And(a=D, b=E00, out=E01);
+    And(a=B, b=C, out=E10);
+    And(a=D, b=E10, out=E11);
+    And(a=A, b=C, out=E20);
+    Or(a=E01, b=E11, out=E30);
+    Or(a=E30, b=E20, out=E);
+
+    // OUT G
+    Not(in=B, out=notB);
+    And(a=B, b=notD, out=G00);
+    And(a=D, b=notB, out=G10);
+    Or(a=G00, b=G10, out=Gthree);
+
+    // OUT F
+    Not(in=A, out=notA);
+    And(a=notA, b=C, out=F00);
+    And(a=F00, b=notB, out=F01);
+    And(a=C, b=notD, out=F10);
+    And(a=notA, b=C, out=F20);
+    And(a=F20, b=notB, out=F21);
+    And(a=notA, b=B, out=F30);
+    And(a=notC, b=D, out=F40);
+    And(a=F40, b=notD, out=F41);
+    And(a=notC, b=D, out=F50);
+    And(a=A, b=B, out=F60);
+    And(a=C, b=D, out=F61);
+    Or(a=F01, b=F11, out=F70);
+    Or(a=F21, b=F31, out=F71);
+    Or(a=F41, b=F51, out=F72);
+    Or(a=F60, b=F61, out=F73);
+    Or(a=F71, b=F72, out=F74);
+    Or(a=F70, b=F73, out=F75);
+    Or(a=F75, b=F74, out=F76);
+    Or(a=F76, b=F63, out=Fthree);
+}
