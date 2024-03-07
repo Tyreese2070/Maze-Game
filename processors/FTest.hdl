@@ -1,0 +1,16 @@
+CHIP FThree {
+    IN A, B, C, D;
+    OUT E, F, G;
+
+    PARTS:
+    // E computation remains unchanged
+
+    // Simplified G computation
+    Not(in=B, out=notB);
+    Not(in=D, out=notD);
+    Xor(a=B, b=D, out=xorBD);
+    Not(in=xorBD, out=notXorBD);
+    Not(in=A, out=notA);
+
+    And(a=notXorBD, b=notA, out=G);
+}
