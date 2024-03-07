@@ -4,21 +4,31 @@
  */
 
 CHIP FALL {
-   IN A, B, C, D;
-   OUT F, G, E;
+   IN A, B, C, D, f0, f1;
+   OUT F, G, E; // F and G for individual chips are Fzero, Fone, Gtwo....
 
    PARTS:
+   //MUX for F, 
+    Mux(a=Fzero, b=Fone, sel=f0, out=ab);
+    Mux(a=Ftwo, b=Fthree, sel=f0, out=cd);
+    Mux(a=ab, b=cd, sel=f1, out=F);
+
+   //MUX (G)
+   Mux(a=Gzero, b=Gone, sel=f0, out=ab);
+   Mux(a=Gtwo, b=Gthree, sel=f0, out=cd);
+   Mux(a=ab, b=cd, sel=f1, out=G);
+
    //FZero
-   Not(in=C, out=F);
-   Not(in=D, out=G);
+   Not(in=C, out=Fzero);
+   Not(in=D, out=zero);
 
    // FOne
-   And(a=A, b=C, out=F);
-   And(a=B, b=D, out=G);
+   And(a=A, b=C, out=Fone);
+   And(a=B, b=D, out=Gone);
 
    //FTwo
-   Or(a=A, b=C, out=F);
-   Or(a=B, b=D, out=G);
+   Or(a=A, b=C, out=Ftwo);
+   Or(a=B, b=D, out=Gtwo);
 
    // FThree
    // OUT E
@@ -38,7 +48,7 @@ CHIP FALL {
 
    And(a=B, b=notD, out=G00);
    And(a=D, b=notB, out=G10);
-   Or(a=G00, b=G10, out=G);
+   Or(a=G00, b=G10, out=Gthree);
    
 
    // OUT F
@@ -72,5 +82,5 @@ CHIP FALL {
    Or(a=F21, b=F31, out=F61);
    Or(a=F42, b=F52, out=F62);
    Or(a=F60, b=F61, out=F63);
-   Or(a=F63, b=F62, out=F); 
+   Or(a=F63, b=F62, out=Fthree); 
 }
