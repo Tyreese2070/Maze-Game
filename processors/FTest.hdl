@@ -1,4 +1,4 @@
-CHIP FThree {
+CHIP FTest {
     IN A, B, C, D;
     OUT E, F, G;
 
