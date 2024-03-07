@@ -4,12 +4,14 @@
  */
 
 CHIP FALL {
-   IN A, B, C, D, f0, f1;
-   
+   IN A, B, C, D;
+   // Selection bits for MUX
+   IN f1, f0; 
+
    // F and G for individual chips are Fzero, Fone, Gtwo....
    OUT F, G, E;
 
-   PARTS:
+   PARTS:/*
    // MUX for F
    Mux(a=Fzero, b=Fone, sel=f0, out=ab_f);
    Mux(a=Ftwo, b=Fthree, sel=f0, out=cd_f);
@@ -19,7 +21,7 @@ CHIP FALL {
    Mux(a=Gzero, b=Gone, sel=f0, out=ab_g);
    Mux(a=Gtwo, b=Gthree, sel=f0, out=cd_g);
    Mux(a=ab_g, b=cd_g, sel=f1, out=G);
-
+*/
    //FZero
    Not(in=C, out=Fzero);
    Not(in=D, out=zero);
