@@ -5,18 +5,20 @@
 
 CHIP FALL {
    IN A, B, C, D, f0, f1;
-   OUT F, G, E; // F and G for individual chips are Fzero, Fone, Gtwo....
+   
+   // F and G for individual chips are Fzero, Fone, Gtwo....
+   OUT F, G, E;
 
    PARTS:
-    // MUX for F
-    Mux(a=Fzero, b=Fone, sel=f0, out=ab_f);
-    Mux(a=Ftwo, b=Fthree, sel=f0, out=cd_f);
-    Mux(a=ab_f, b=cd_f, sel=f1, out=F);
+   // MUX for F
+   Mux(a=Fzero, b=Fone, sel=f0, out=ab_f);
+   Mux(a=Ftwo, b=Fthree, sel=f0, out=cd_f);
+   Mux(a=ab_f, b=cd_f, sel=f1, out=F);
 
-    // MUX for G
-    Mux(a=Gzero, b=Gone, sel=f0, out=ab_g);
-    Mux(a=Gtwo, b=Gthree, sel=f0, out=cd_g);
-    Mux(a=ab_g, b=cd_g, sel=f1, out=G);
+   // MUX for G
+   Mux(a=Gzero, b=Gone, sel=f0, out=ab_g);
+   Mux(a=Gtwo, b=Gthree, sel=f0, out=cd_g);
+   Mux(a=ab_g, b=cd_g, sel=f1, out=G);
 
    //FZero
    Not(in=C, out=Fzero);
