@@ -1,0 +1,26 @@
+/*
+ * FSEQ
+ * Author: Tyreese Green
+ */
+
+CHIP FSEQ {
+    IN A, B, C, D, f1, f0, load;
+    OUT F, G, E;
+
+    PARTS:
+    Mux(a=Fout, b=C, sel=load, out=Fmux);
+    DFF(in=Fmux, out=Cfinal);
+    
+    Mux(a=Gout, b=D, sel=load, out=Gmux);
+    DFF(in=Gmux, out=Dfinal);
+
+    Mux(a=Eout, b=Edff, sel=load, out=EmuxOut);
+    DFF(in=EmuxOut, out=Edff);
+    
+    Or(a=Eout, b=Eout, out=E);
+    Or(a=Fout, b=Fout, out=F);
+    Or(a=Gout, b=Gout, out=G);
+    
+    FALL(A=A, B=B, C=Cfinal, D=Dfinal, f1=f1, f0=f0, F=Fout, G=Gout, E=Eout);
+    
+}

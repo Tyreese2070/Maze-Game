@@ -61,6 +61,4 @@ CHIP FThree {
    Or(a=F60, b=F61, out=F63);
    Or(a=F63, b=F62, out=F);
    
-   
-   
 }

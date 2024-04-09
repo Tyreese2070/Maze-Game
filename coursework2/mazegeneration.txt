@@ -1,0 +1,7 @@
+For coursework task 2 - Generating mazes
+Implement an algorithm, document the process
+Check cwk2 brief
+
+https://en.wikipedia.org/wiki/Maze_generation_algorithm
+
+Iterative randomized Prim's algorithm (without stack, without sets)

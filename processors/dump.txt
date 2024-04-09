@@ -1,0 +1,9 @@
+
+SELECT a.Name AS Artist, COUNT(DISTINCT al.AlbumId) AS TotalAlbum, COUNT(*) AS TrackSold
+FROM artists a
+JOIN albums al ON a.ArtistId = al.ArtistId
+JOIN tracks t ON al.AlbumId = t.AlbumId
+JOIN invoice_items i ON t.TrackId = i.TrackId
+GROUP BY a.ArtistId
+ORDER BY TrackSold DESC
+LIMIT 20;

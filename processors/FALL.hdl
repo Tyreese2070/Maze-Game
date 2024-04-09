@@ -13,19 +13,23 @@ CHIP FALL {
    // So E is only used when F is used - when f1,f0 = (0,0)
    Or(a=f1, b=f0, out=Eout1);
    Not(in=Eout1, out=Eout2);
-   And(a=Eout1, b=Ethree, out=E);
-   
+   And(a=Eout2, b=Ethree, out=E);
+
+   FZero(A=A, B=B, C=C, D=D, F=Fzero, G=Gzero);
+   FOne(A=A, B=B, C=C, D=D, F=Fone, G=Gone);
+   FTwo(A=A, B=B, C=C, D=D, F=Ftwo, G=Gtwo);
+   FThree(A=A, B=B, C=C, D=D, F=Fthree, G=Gthree, E=Ethree);
    
    // MUX for F
-   Mux(a=Fthree, b=Ftwo, sel=f1, out=FMux1);
-   Mux(a=Fone, b=Fzero, sel=f1, out=FMux2);
+   Mux(a=Fthree, b=Fone, sel=f1, out=FMux1);
+   Mux(a=Ftwo, b=Fzero, sel=f1, out=FMux2);
    Mux(a=FMux1, b=FMux2, sel=f0, out=F);
 
    // MUX for G
-   Mux(a=Gthree, b=Gtwo, sel=f1, out=GMux1);
-   Mux(a=Gone, b=Gzero, sel=f1, out=GMux2);
+   Mux(a=Gthree, b=Gone, sel=f1, out=GMux1);
+   Mux(a=Gtwo, b=Gzero, sel=f1, out=GMux2);
    Mux(a=GMux1, b=GMux2, sel=f0, out=G);
-
+/*
    //FZero
    Not(in=C, out=Fzero);
    Not(in=D, out=Gzero);
@@ -90,5 +94,5 @@ CHIP FALL {
    Or(a=F21, b=F31, out=F61);
    Or(a=F42, b=F52, out=F62);
    Or(a=F60, b=F61, out=F63);
-   Or(a=F63, b=F62, out=Fthree); 
+   Or(a=F63, b=F62, out=Fthree); */
 }

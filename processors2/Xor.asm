@@ -1,0 +1,17 @@
+@R3
+D=M
+@R4
+D=D-M
+D=M
+@FALSE
+D;JEQ
+@R5
+M=1
+@END
+0;JMP
+
+(FALSE)
+@R5
+M=0
+
+(END)
