@@ -2,12 +2,17 @@
 #include <stdlib.h>
 #include <string.h> 
 
+#define maxWidth 100
+#define maxHeight 100
+
 struct Maze{
     int width;
     int height;
-    char *map;
+    char map[maxWidth][maxHeight];
     char filepath[150];
 };
+
+void getCoords(){}
 
 // Move the user based on input
 void moveCharacter(char userInput){
@@ -17,11 +22,46 @@ void moveCharacter(char userInput){
     // 'D' or 'd' - RIGHT
 }
 
-// Load maze file
-void loadMaze(){
-    // load maze and store to struct
+int search(char character)
+{
+    for (int i = 0; i <= maxWidth; i++){
+        for (int j = 0; j <= maxHeight; j++){
+            if maze.map[i][j] == character;
+            return i, j;
+        }
+    }
+    return 0;
+}
 
-    // read in line by line
+// Load maze file
+int loadMaze(){
+    // load maze and store to struct
+    int count = 0;
+    int buffer_size = 1024;
+    char line_buffer[buffer_size];
+
+    // Adding to the struct and increasing the count to get the number of records
+    char data[100];
+    strcpy(data, filepath);
+    FILE *file = fopen(data, "r");
+    if (file == NULL)
+    {
+        printf("Error: Could not open file\n");
+        return 1;
+    }
+    else
+    {
+        printf("File successfully loaded.\n");
+        while (fgets(line_buffer, buffer_size, file) != NULL)
+        {
+            for(int i = 0; i < maxWidth; i++)
+            {
+                maze.map[i][count] = line_buffer[i];
+            }
+            count++;
+        }
+    }
+    fclose(file);
 
     // Store each line
 
@@ -49,6 +89,7 @@ int main(int argc, char *argv[])
 {
 
     // Declare struct for the maze
+    struct Maze;
 
     // Validate filetype and args
     if (argc != 2)
@@ -56,6 +97,7 @@ int main(int argc, char *argv[])
         printf("Invalid input\n");
         return 1;
     }
+
     char filepath[] = argv[1];
 
     FILE *file = fopen(filepath, "r");
@@ -71,11 +113,7 @@ int main(int argc, char *argv[])
     char line_buffer[buffer_size];
 
     // Adding to the struct and increasing the count to get the number of records
-    while (fgets(line_buffer, buffer_size, file) != NULL)
-    {
-        
-        count++;
-    }
+    loadMaze();
         // Replace start point with "X"
 
     // Validate maze file
