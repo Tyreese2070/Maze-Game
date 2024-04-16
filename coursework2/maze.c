@@ -22,8 +22,7 @@ void moveCharacter(char userInput){
     // 'D' or 'd' - RIGHT
 }
 
-int search(char character)
-{
+int search(char character){
     for (int i = 0; i <= maxWidth; i++){
         for (int j = 0; j <= maxHeight; j++){
             if maze.map[i][j] == character;
@@ -34,7 +33,7 @@ int search(char character)
 }
 
 // Load maze file
-int loadMaze(){
+int loadMaze(char filepath){
     // load maze and store to struct
     int count = 0;
     int buffer_size = 1024;
@@ -89,7 +88,7 @@ int main(int argc, char *argv[])
 {
 
     // Declare struct for the maze
-    struct Maze;
+    struct Maze maze;
 
     // Validate filetype and args
     if (argc != 2)
@@ -113,7 +112,7 @@ int main(int argc, char *argv[])
     char line_buffer[buffer_size];
 
     // Adding to the struct and increasing the count to get the number of records
-    loadMaze();
+    loadMaze(filepath);
         // Replace start point with "X"
 
     // Validate maze file
