@@ -12,40 +12,12 @@ struct Maze{
     char filepath[150];
 };
 
-int getdata(char filename[30], char mode[2])
-{
-    // FitnessData data_array[100];
-    int count = 0;
-    int buffer_size = 1024;
-    char line_buffer[buffer_size];
-    char data[100];
-
-    // Opening the file
-    strcpy(data, filename);
-    FILE *file = fopen(data, mode);
-    if (file == NULL)
-    {
-        printf("Error: Could not open file\n");
-        return -1;
-    }
-    else
-
-    // Reading from the file and adding it to the array
-    {
-        while (fgets(line_buffer, buffer_size, file) != NULL)
-        {
-            count++;
-        }
-        fclose(file);
-    }
-
-    return count;
-}
-
 int main(int argc, char *argv[]){
 
     // Declare struct for the maze
     struct Maze maze;
+    maze.height = 0;
+    maze.width = 0;
 
     // Validate filetype and args
     if (argc != 2)
@@ -54,7 +26,6 @@ int main(int argc, char *argv[]){
         return 1;
     }
 
-    int count = 0;
     int buffer_size = 1024;
     char line_buffer[buffer_size];
     char data[100];
@@ -72,10 +43,21 @@ int main(int argc, char *argv[]){
     {
         while (fgets(line_buffer, buffer_size, file) != NULL)
         {
-            printf("%s", line_buffer);
-            count++;
+            for (int i = 0; i < strlen(line_buffer); i++){
+                strcpy(maze.map[i][maze.height], line_buffer[i]);
+            }
+            maze.height++;
         }
         fclose(file);
+    }
+
+    for (int i = 0; i < maze.width; i++){
+        for (int j = 0; j < maze.height; j++){
+            if (i = maze.width){
+                printf("%s\n", maze.map[i][j]);
+            }
+            printf("%s", maze.map[i][j]);
+        }
     }
 
     return 0;
