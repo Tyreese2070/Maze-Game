@@ -10,13 +10,17 @@ struct Maze{
     int width;
     int height;
     char map[maxWidth][maxHeight];
-    char winX, winY;
+    int winX, winY, startX, startY;
 };
 
 // Maze coordinates are (y,x).
 
-void viewMaze(struct Maze maze){
+void viewMaze(struct Maze maze, int startX, int startY){
     // Printing the maze
+    if (maze.map[startY][startX] != 'X'){
+        maze.map[startY][startX] = 'S';
+    }
+
     for (int i = 0; i < maze.height; i++) {
         printf("%.*s\n", maze.width, maze.map[i]);
     }
@@ -42,18 +46,23 @@ int validateMaze(struct Maze maze){
     if (maze.width < 5 || maze.width > 100 || maze.height < 5 || maze.height > 100){
         return 3;
     }
+
+    for (int i = 0; i < maze.height; i++) {
+        for (int j = 0; j < maze.width; j++) {
+            char current_char = maze.map[i][j];
+            if (current_char != 'X' || current_char != ' '|| current_char != 'E' || current_char != 'S' || current_char != '#'){
+                return 3;
+            }
+        }
+    }
+
 }
 
 // Handle the key inputs from the user
-struct Maze handleInput(struct Maze maze, char input){
+struct Maze handleMovement(struct Maze maze, char input){
     input = tolower(input);
     int x, y = -1;
     getCoords(maze, 'X', &x, &y);
-
-    // View map
-    if (input == 'm'){
-        viewMaze(maze);
-    }
 
     // Right
     if (input == 'd'){        
@@ -96,13 +105,13 @@ struct Maze handleInput(struct Maze maze, char input){
             return maze;
         }
 
-        else if(maze.map[y][y-1] == '#'){
+        else if(maze.map[y-1][x] == '#'){
             printf("Hit wall, (%d, %d)\n", x, y);
             return maze;
         }
 
         maze.map[y][x] = ' ';
-        maze.map[y][y-1] = 'X';
+        maze.map[y-1][x] = 'X';
         return maze;
     }
 
@@ -113,15 +122,17 @@ struct Maze handleInput(struct Maze maze, char input){
             return maze;
         }
 
-        else if(maze.map[y][y+1] == '#'){
+        else if(maze.map[y+1][x] == '#'){
             printf("Hit wall, (%d, %d)\n", x, y);
             return maze;
         }
 
         maze.map[y][x] = ' ';
-        maze.map[y][y+1] = 'X';
+        maze.map[y+1][x] = 'X';
         return maze;
     }
+
+    printf("Invalid input\n");
 }
 
 int checkWin(struct Maze maze){
@@ -135,7 +146,6 @@ int checkWin(struct Maze maze){
 
 int main(int argc, char *argv[]){
 
-    int playing = 1;
     char userInput;
 
     // Declare struct for the maze
@@ -159,7 +169,7 @@ int main(int argc, char *argv[]){
     if (file == NULL)
     {
         printf("Error: Could not open file\n");
-        return 1;
+        return 2;
     }
 
     // Reading from the file and adding it to the map array
@@ -177,6 +187,7 @@ int main(int argc, char *argv[]){
         printf("Maze loaded successfully\n");
     }
 
+    // Initializing maze variables
     // Set the coordinates of the exit point
     getCoords(maze, 'E', &maze.winX, &maze.winY);
 
@@ -184,8 +195,11 @@ int main(int argc, char *argv[]){
     int x, y;
     getCoords(maze, 'S', &x, &y);
     maze.map[y][x] = 'X';
+    maze.startX = x;
+    maze.startY = y;
 
-    while (playing == 1){
+    // Gameplay loop
+    while (1){
         printf("Input: ");
         scanf(" %c", &userInput);
         printf("\n");
@@ -194,8 +208,16 @@ int main(int argc, char *argv[]){
             break;
         }
 
-        maze = handleInput(maze, userInput);
+        else if (tolower(userInput) == 'm'){
+            viewMaze(maze, maze.startX, maze.startY);
+        }
+        
+        else{
+            maze = handleMovement(maze, userInput);
+        }
+
         if (checkWin(maze) == 1){
+            viewMaze(maze, maze.startX, maze.startY);
             printf("Congratulations, you win!!\n");
             break;
         }
