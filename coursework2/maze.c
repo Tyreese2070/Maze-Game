@@ -6,17 +6,20 @@
 #define maxWidth 100
 #define maxHeight 100
 
+// struct for maze - coordinates are (y,x)
 struct Maze{
     int width;
     int height;
     char map[maxWidth][maxHeight];
     int winX, winY, startX, startY;
+
+    // for error checking
+    int err;
 };
 
-// Maze coordinates are (y,x).
-
+// Output the maze
 void viewMaze(struct Maze maze, int startX, int startY){
-    // Printing the maze
+    // Checking for player and start point overlap
     if (maze.map[startY][startX] != 'X'){
         maze.map[startY][startX] = 'S';
     }
@@ -26,6 +29,7 @@ void viewMaze(struct Maze maze, int startX, int startY){
     }
 }
 
+// Get coordinates of given character 
 void getCoords(struct Maze maze, char key, int *xpos, int *ypos){
     for (int i = 0; i < maze.height; i++) {
         for (int j = 0; j < maze.width; j++) {
@@ -42,19 +46,40 @@ void getCoords(struct Maze maze, char key, int *xpos, int *ypos){
     *xpos, *ypos = -1;
 }
 
+// Checks the maze meets specified requirements
 int validateMaze(struct Maze maze){
+
+    // Maze size checks
     if (maze.width < 5 || maze.width > 100 || maze.height < 5 || maze.height > 100){
+        printf("invalid dimensions");
         return 3;
     }
 
+    // Maze character checks
     for (int i = 0; i < maze.height; i++) {
         for (int j = 0; j < maze.width; j++) {
             char current_char = maze.map[i][j];
-            if (current_char != 'X' || current_char != ' '|| current_char != 'E' || current_char != 'S' || current_char != '#'){
+            if (current_char != ' ' && current_char != 'E' && current_char != 'S' && current_char != '#'){
+                printf("invalid char\n");
                 return 3;
             }
         }
     }
+
+    for (int i = 0; i < maze.height; i++){
+        if (i = maze.height-1){
+            if (strlen(maze.map[i]) != maze.width){
+                printf("invalid width 2:\n Map: %s\n Width: %d\n length: %ld\n i: %d\n", maze.map[i], maze.width, strlen(maze.map[i]), i);
+                return 3;
+                }
+        }
+
+        if (strlen(maze.map[i]) != maze.width){
+            printf("invalid width 1:\n Map: %s\n Width: %d\n length: %ld\n i: %d\n", maze.map[i], maze.width, strlen(maze.map[i]), i);
+            return 3;
+        }
+    }
+    return 0;
 
 }
 
@@ -67,12 +92,12 @@ struct Maze handleMovement(struct Maze maze, char input){
     // Right
     if (input == 'd'){        
         if (x + 1 == maze.width){
-            printf("Exceeded map limit (%d, %d)\n", y, x);
+            printf("Exceeded map limit\n");
             return maze;
         }
 
         else if(maze.map[y][x+1] == '#'){
-            printf("Hit wall, (%d, %d)\n", x, y);
+            printf("Hit wall\n");
             return maze;
         }
 
@@ -84,12 +109,12 @@ struct Maze handleMovement(struct Maze maze, char input){
     // Left
     if (input == 'a'){        
         if (x - 1 == maze.width){
-            printf("Exceeded map limit (%d, %d)\n", y, x);
+            printf("Exceeded map limit\n");
             return maze;
         }
 
         else if(maze.map[y][x-1] == '#'){
-            printf("Hit wall, (%d, %d)\n", x, y);
+            printf("Hit wall\n");
             return maze;
         }
 
@@ -101,12 +126,12 @@ struct Maze handleMovement(struct Maze maze, char input){
     // Up
     if (input == 'w'){        
         if (y - 1 == maze.width){
-            printf("Exceeded map limit (%d, %d)\n", y, x);
+            printf("Exceeded map limit\n");
             return maze;
         }
 
         else if(maze.map[y-1][x] == '#'){
-            printf("Hit wall, (%d, %d)\n", x, y);
+            printf("Hit wall\n");
             return maze;
         }
 
@@ -118,12 +143,12 @@ struct Maze handleMovement(struct Maze maze, char input){
     // Down
     if (input == 's'){        
         if (y + 1 == maze.width){
-            printf("Exceeded map limit (%d, %d)\n", y, x);
+            printf("Exceeded map limit\n");
             return maze;
         }
 
         else if(maze.map[y+1][x] == '#'){
-            printf("Hit wall, (%d, %d)\n", x, y);
+            printf("Hit wall\n");
             return maze;
         }
 
@@ -135,6 +160,7 @@ struct Maze handleMovement(struct Maze maze, char input){
     printf("Invalid input\n");
 }
 
+// Checks if the user has reached the exit
 int checkWin(struct Maze maze){
     int x, y = -1;
     getCoords(maze, 'X', &x, &y);
@@ -144,32 +170,21 @@ int checkWin(struct Maze maze){
     return 0;
 }
 
-int main(int argc, char *argv[]){
-
-    char userInput;
-
-    // Declare struct for the maze
+struct Maze readFile(char filepath[]){
     struct Maze maze;
-    maze.height = 0;
-    maze.width = 0;
-
-    // Validate filetype and args
-    if (argc != 2)
-    {
-        printf("Invalid input\n");
-        return 1;
-    }
+    maze.err = 0;
 
     int buffer_size = 1024;
     char line_buffer[buffer_size];
     char data[100];
 
     // Opening the file
-    FILE *file = fopen(argv[1], "r");
+    FILE *file = fopen(filepath, "r");
     if (file == NULL)
     {
         printf("Error: Could not open file\n");
-        return 2;
+        maze.err = 2;
+        return maze;
     }
 
     // Reading from the file and adding it to the map array
@@ -185,6 +200,35 @@ int main(int argc, char *argv[]){
         }
         fclose(file);
         printf("Maze loaded successfully\n");
+    }
+
+    return maze;
+}
+
+int main(int argc, char *argv[]){
+
+    char userInput;
+
+    // Declare struct for the maze
+    struct Maze maze;
+    maze.height = 0;
+    maze.width = 0;
+
+    // Validate args
+    if (argc != 2)
+    {
+        printf("Usage: ./maze <maze filepath>\n");
+        return 1;
+    }
+
+    maze = readFile(argv[1]);
+    if (maze.err == 2){
+        return 2;
+    }
+
+    if (validateMaze(maze) == 3){
+        printf("Invalid maze\n");
+        return 3;
     }
 
     // Initializing maze variables
