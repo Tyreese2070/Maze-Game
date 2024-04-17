@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #define maxWidth 100
 #define maxHeight 100
@@ -9,10 +10,133 @@ struct Maze{
     int width;
     int height;
     char map[maxWidth][maxHeight];
-    char filepath[150];
+    char winX, winY;
 };
 
+// Maze coordinates are (y,x).
+
+void viewMaze(struct Maze maze){
+    // Printing the maze
+    for (int i = 0; i < maze.height; i++) {
+        printf("%.*s\n", maze.width, maze.map[i]);
+    }
+}
+
+void getCoords(struct Maze maze, char key, int *xpos, int *ypos){
+    for (int i = 0; i < maze.height; i++) {
+        for (int j = 0; j < maze.width; j++) {
+            char current_char = maze.map[i][j];
+            if (key == current_char){
+                *xpos = j;
+                *ypos = i;
+                return;
+                // return i, j; returning i as 0?
+            }
+        }
+    }
+    // key not found
+    *xpos, *ypos = -1;
+}
+
+int validateMaze(struct Maze maze){
+    if (maze.width < 5 || maze.width > 100 || maze.height < 5 || maze.height > 100){
+        return 3;
+    }
+}
+
+// Handle the key inputs from the user
+struct Maze handleInput(struct Maze maze, char input){
+    input = tolower(input);
+    int x, y = -1;
+    getCoords(maze, 'X', &x, &y);
+
+    // View map
+    if (input == 'm'){
+        viewMaze(maze);
+    }
+
+    // Right
+    if (input == 'd'){        
+        if (x + 1 == maze.width){
+            printf("Exceeded map limit (%d, %d)\n", y, x);
+            return maze;
+        }
+
+        else if(maze.map[y][x+1] == '#'){
+            printf("Hit wall, (%d, %d)\n", x, y);
+            return maze;
+        }
+
+        maze.map[y][x] = ' ';
+        maze.map[y][x+1] = 'X';
+        return maze;
+    }
+
+    // Left
+    if (input == 'a'){        
+        if (x - 1 == maze.width){
+            printf("Exceeded map limit (%d, %d)\n", y, x);
+            return maze;
+        }
+
+        else if(maze.map[y][x-1] == '#'){
+            printf("Hit wall, (%d, %d)\n", x, y);
+            return maze;
+        }
+
+        maze.map[y][x] = ' ';
+        maze.map[y][x-1] = 'X';
+        return maze;
+    }
+
+    // Up
+    if (input == 'w'){        
+        if (y - 1 == maze.width){
+            printf("Exceeded map limit (%d, %d)\n", y, x);
+            return maze;
+        }
+
+        else if(maze.map[y][y-1] == '#'){
+            printf("Hit wall, (%d, %d)\n", x, y);
+            return maze;
+        }
+
+        maze.map[y][x] = ' ';
+        maze.map[y][y-1] = 'X';
+        return maze;
+    }
+
+    // Down
+    if (input == 's'){        
+        if (y + 1 == maze.width){
+            printf("Exceeded map limit (%d, %d)\n", y, x);
+            return maze;
+        }
+
+        else if(maze.map[y][y+1] == '#'){
+            printf("Hit wall, (%d, %d)\n", x, y);
+            return maze;
+        }
+
+        maze.map[y][x] = ' ';
+        maze.map[y][y+1] = 'X';
+        return maze;
+    }
+}
+
+int checkWin(struct Maze maze){
+    int x, y = -1;
+    getCoords(maze, 'X', &x, &y);
+    if (x == maze.winX && y == maze.winY){
+        return 1;
+    }
+    return 0;
+}
+
 int main(int argc, char *argv[]){
+
+    int playing = 1;
+    char userInput;
 
     // Declare struct for the maze
     struct Maze maze;
@@ -43,20 +167,37 @@ int main(int argc, char *argv[]){
     {
         while (fgets(line_buffer, buffer_size, file) != NULL)
         {
+            maze.width = strlen(line_buffer);
             for (int i = 0; i < strlen(line_buffer); i++){
-                strcpy(maze.map[i][maze.height], line_buffer[i]);
+                maze.map[maze.height][i] = line_buffer[i];
             }
             maze.height++;
         }
         fclose(file);
+        printf("Maze loaded successfully\n");
     }
 
-    for (int i = 0; i < maze.width; i++){
-        for (int j = 0; j < maze.height; j++){
-            if (i = maze.width){
-                printf("%s\n", maze.map[i][j]);
-            }
-            printf("%s", maze.map[i][j]);
+    // Set the coordinates of the exit point
+    getCoords(maze, 'E', &maze.winX, &maze.winY);
+
+    // Placing the user at the start point
+    int x, y;
+    getCoords(maze, 'S', &x, &y);
+    maze.map[y][x] = 'X';
+
+    while (playing == 1){
+        printf("Input: ");
+        scanf(" %c", &userInput);
+        printf("\n");
+
+        if (tolower(userInput) == 'q'){
+            break;
+        }
+
+        maze = handleInput(maze, userInput);
+        if (checkWin(maze) == 1){
+            printf("Congratulations, you win!!\n");
+            break;
         }
     }
 
