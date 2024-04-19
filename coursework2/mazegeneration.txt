@@ -1,20 +1,8 @@
 For coursework task 2 - Generating mazes
 Implement an algorithm, document the process
 Check cwk2 brief
+Not too simple but not too hard
 
 https://en.wikipedia.org/wiki/Maze_generation_algorithm
 
 Iterative randomized Prim's algorithm (without stack, without sets)
-
-        /*
-        if (i == maze.height-1){
-            if (strlen(maze.map[i]) != maze.width){
-                printf("err1, length: %ld, width: %d, i: %d\n", strlen(maze.map[i]), maze.width, i);
-                return 3;
-                }
-        }
-
-        else if (strlen(maze.map[i])-1 != maze.width){
-            printf("err2: %s, length: %ld, width: %d, i: %d\n", maze.map[i], strlen(maze.map[i])-1, maze.width, i);
-            return 3;
-        }*/
