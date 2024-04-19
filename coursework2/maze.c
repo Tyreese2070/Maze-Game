@@ -19,6 +19,7 @@ struct Maze{
 
 // Output the maze
 void viewMaze(struct Maze maze){
+    printf("\n");
     // Checking for player and start point overlap
     if (maze.map[maze.startY][maze.startX] != 'X'){
         maze.map[maze.startY][maze.startX] = 'S';
@@ -27,14 +28,15 @@ void viewMaze(struct Maze maze){
     for (int i = 0; i < maze.height; i++) {
         printf("%.*s\n", maze.width, maze.map[i]);
     }
+    printf("\n");
 }
 
 // Get coordinates of given character 
 void getCoords(struct Maze maze, char key, int *xpos, int *ypos){
     for (int i = 0; i < maze.height; i++) {
         for (int j = 0; j < maze.width; j++) {
-            char current_char = maze.map[i][j];
-            if (key == current_char){
+            char currentChar = maze.map[i][j];
+            if (key == currentChar){
                 *xpos = j;
                 *ypos = i;
                 return;
@@ -48,32 +50,49 @@ void getCoords(struct Maze maze, char key, int *xpos, int *ypos){
 
 // Checks the maze meets specified requirements
 int validateMaze(struct Maze maze){
+    int exitCount = 0;
+    int startCount = 0;
 
     // Maze size checks
     if (maze.width < 5 || maze.width > 100 || maze.height < 5 || maze.height > 100){
-        printf("Invalid dimensions. Width and height must be between 5-100.");
+        printf("Invalid dimensions. Width and height must be between 5-100.\n");
         return 3;
-    }
-
-    // Maze character checks
-    for (int i = 0; i < maze.height; i++) {
-        for (int j = 0; j < maze.width; j++) {
-            char current_char = maze.map[i][j];
-            if (current_char != ' ' && current_char != 'E' && current_char != 'S' && current_char != '#'){
-                printf("Invalid characters\n");
-                return 3;
-            }
-        }
     }
 
     // Checks maze dimensions are correct
     for (int i = 0; i < maze.height; i++){
         
         if (strlen(maze.map[i]) != maze.width){
-            printf("Invalid maze");
+            printf("Invalid maze. Each row and column must have the same length\n");
             return 3;
             }
     }
+
+    // Maze character checks
+    for (int i = 0; i < maze.height; i++) {
+        for (int j = 0; j < maze.width; j++) {
+            char currentChar = maze.map[i][j];
+
+            if (currentChar == 'S'){
+                startCount += 1;
+            }
+
+            if (currentChar == 'E'){
+                exitCount += 1;
+            }
+
+            if (currentChar != ' ' && currentChar != 'E' && currentChar != 'S' && currentChar != '#'){
+                printf("Invalid characters\n");
+                return 3;
+            }
+        }
+    }
+
+    if (startCount != 1 || exitCount != 1){
+        printf("Invalid maze. There can only be a single start point or exit point.");
+        return 3;
+    }
+
     return 0;
 
 }
@@ -225,7 +244,6 @@ int main(int argc, char *argv[]){
     }
 
     if (validateMaze(maze) == 3){
-        printf("Invalid maze\n");
         return 3;
     }
 
@@ -244,7 +262,6 @@ int main(int argc, char *argv[]){
     while (1){
         printf("Input: ");
         scanf(" %c", &userInput);
-        printf("\n");
 
         // Quit
         if (tolower(userInput) == 'q'){
