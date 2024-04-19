@@ -122,7 +122,7 @@ struct Maze handleMovement(struct Maze maze, char input){
 
     // Left
     if (input == 'a'){        
-        if (x - 1 == maze.width){
+        if (x - 1 == -1){
             printf("Exceeded map limit\n");
             return maze;
         }
@@ -139,7 +139,7 @@ struct Maze handleMovement(struct Maze maze, char input){
 
     // Up
     if (input == 'w'){        
-        if (y - 1 == maze.width){
+        if (y - 1 == -1){
             printf("Exceeded map limit\n");
             return maze;
         }
@@ -156,7 +156,7 @@ struct Maze handleMovement(struct Maze maze, char input){
 
     // Down
     if (input == 's'){        
-        if (y + 1 == maze.width){
+        if (y + 1 == maze.height){
             printf("Exceeded map limit\n");
             return maze;
         }
