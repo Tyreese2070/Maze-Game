@@ -38,7 +38,7 @@ void getCoords(struct Maze maze, char key, int *xpos, int *ypos){
                 *xpos = j;
                 *ypos = i;
                 return;
-                // return i, j; returning i as 0?
+                // return i, j; //returning i as 0?
             }
         }
     }
@@ -66,16 +66,18 @@ int validateMaze(struct Maze maze){
         }
     }
 
+    // Checks each maze has correct length and width
     for (int i = 0; i < maze.height; i++){
-        if (i = maze.height-1){
+        
+        if (i == maze.height-1){
             if (strlen(maze.map[i]) != maze.width){
-                printf("invalid width 2:\n Map: %s\n Width: %d\n length: %ld\n i: %d\n", maze.map[i], maze.width, strlen(maze.map[i]), i);
+                printf("err1, length: %ld, width: %d, i: %d\n", strlen(maze.map[i]), maze.width, i);
                 return 3;
                 }
         }
 
-        if (strlen(maze.map[i]) != maze.width){
-            printf("invalid width 1:\n Map: %s\n Width: %d\n length: %ld\n i: %d\n", maze.map[i], maze.width, strlen(maze.map[i]), i);
+        else if (strlen(maze.map[i])-1 != maze.width){
+            printf("err2: %s, length: %ld, width: %d, i: %d\n", maze.map[i], strlen(maze.map[i])-1, maze.width, i);
             return 3;
         }
     }
