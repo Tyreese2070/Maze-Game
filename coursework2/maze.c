@@ -6,7 +6,7 @@
 #define maxWidth 100
 #define maxHeight 100
 
-// struct for maze - coordinates are (y,x)
+// struct for maze - coordinates are in the form (y,x)
 struct Maze{
     int width;
     int height;
@@ -18,10 +18,10 @@ struct Maze{
 };
 
 // Output the maze
-void viewMaze(struct Maze maze, int startX, int startY){
+void viewMaze(struct Maze maze){
     // Checking for player and start point overlap
-    if (maze.map[startY][startX] != 'X'){
-        maze.map[startY][startX] = 'S';
+    if (maze.map[maze.startY][maze.startX] != 'X'){
+        maze.map[maze.startY][maze.startX] = 'S';
     }
 
     for (int i = 0; i < maze.height; i++) {
@@ -66,20 +66,13 @@ int validateMaze(struct Maze maze){
         }
     }
 
-    // Checks each maze has correct length and width
+    // Checks maze dimensions are correct
     for (int i = 0; i < maze.height; i++){
         
-        if (i == maze.height-1){
-            if (strlen(maze.map[i]) != maze.width){
-                printf("err1, length: %ld, width: %d, i: %d\n", strlen(maze.map[i]), maze.width, i);
-                return 3;
-                }
-        }
-
-        else if (strlen(maze.map[i])-1 != maze.width){
-            printf("err2: %s, length: %ld, width: %d, i: %d\n", maze.map[i], strlen(maze.map[i])-1, maze.width, i);
+        if (strlen(maze.map[i]) != maze.width){
+            //printf("%s\n, length: %ld, width: %d, i: %d\n", maze.map[i], strlen(maze.map[i]), maze.width, i);
             return 3;
-        }
+            }
     }
     return 0;
 
@@ -194,7 +187,10 @@ struct Maze readFile(char filepath[]){
     {
         while (fgets(line_buffer, buffer_size, file) != NULL)
         {
+            // Removing new line character
+            line_buffer[strcspn(line_buffer, "\n")] = '\0';
             maze.width = strlen(line_buffer);
+
             for (int i = 0; i < strlen(line_buffer); i++){
                 maze.map[maze.height][i] = line_buffer[i];
             }
@@ -233,7 +229,7 @@ int main(int argc, char *argv[]){
         return 3;
     }
 
-    // Initializing maze variables
+    // Initializing maze struct variables
     // Set the coordinates of the exit point
     getCoords(maze, 'E', &maze.winX, &maze.winY);
 
@@ -250,20 +246,24 @@ int main(int argc, char *argv[]){
         scanf(" %c", &userInput);
         printf("\n");
 
+        // Quit
         if (tolower(userInput) == 'q'){
             break;
         }
 
+        // View maze
         else if (tolower(userInput) == 'm'){
-            viewMaze(maze, maze.startX, maze.startY);
+            viewMaze(maze);
         }
         
+        // Movement
         else{
             maze = handleMovement(maze, userInput);
         }
 
+        // Check for win
         if (checkWin(maze) == 1){
-            viewMaze(maze, maze.startX, maze.startY);
+            viewMaze(maze);
             printf("Congratulations, you win!!\n");
             break;
         }
