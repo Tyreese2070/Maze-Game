@@ -51,7 +51,7 @@ int validateMaze(struct Maze maze){
 
     // Maze size checks
     if (maze.width < 5 || maze.width > 100 || maze.height < 5 || maze.height > 100){
-        printf("invalid dimensions");
+        printf("Invalid dimensions. Width and height must be between 5-100.");
         return 3;
     }
 
@@ -60,7 +60,7 @@ int validateMaze(struct Maze maze){
         for (int j = 0; j < maze.width; j++) {
             char current_char = maze.map[i][j];
             if (current_char != ' ' && current_char != 'E' && current_char != 'S' && current_char != '#'){
-                printf("invalid char\n");
+                printf("Invalid characters\n");
                 return 3;
             }
         }
@@ -70,7 +70,7 @@ int validateMaze(struct Maze maze){
     for (int i = 0; i < maze.height; i++){
         
         if (strlen(maze.map[i]) != maze.width){
-            //printf("%s\n, length: %ld, width: %d, i: %d\n", maze.map[i], strlen(maze.map[i]), maze.width, i);
+            printf("Invalid maze");
             return 3;
             }
     }
@@ -182,7 +182,7 @@ struct Maze readFile(char filepath[]){
         return maze;
     }
 
-    // Reading from the file and adding it to the map array
+    // Reading from the file and adding it to the map
     else
     {
         while (fgets(line_buffer, buffer_size, file) != NULL)
