@@ -1,16 +1,20 @@
 import sys
 import random
 
+global mazePath
+global walls
+global visited
+global maze
+global width, height
+mazePath = []
+walls = []
+visited = []
+maze = []
+width = 0
+height = 0
+
 # Maze coordinates are (y,x)
 def main():
-    global maze
-    global width, height
-    mazePath = []
-    maze = []
-    width = 0
-    height = 0
-    walls = []
-    visited = []
 
     # Validate number of args
     if len(sys.argv)-1 != 2:
@@ -34,7 +38,7 @@ def main():
     mazePath.append((y, x))
     visited.append((y,x))
 
-    addWalls(y,x, walls)
+    addWalls(y,x)
 
     while (len(walls) > 0):
         randWall = random.randint(0,len(walls)-1)
@@ -47,40 +51,40 @@ def main():
                 maze[y][x-1] = ' '
                 visited.append((y,x))
                 visited.append((y,x-1))
-                addWalls(y,x-1, walls)
+                addWalls(y,x-1)
 
             if (maze[y][x-1] in visited and maze[y][x+1] not in visited):
                 maze[y][x] = ' '
                 maze[y][x+1] = ' '
                 visited.append((y,x))
                 visited.append((y,x+1))
-                addWalls(y,x-1, walls)
+                addWalls(y,x-1)
 
             if (maze[y-1][x] in visited and maze[y+1][x] not in visited):
                 maze[y][x] = ' '
                 maze[y+1][x] = ' '
                 visited.append((y,x))
                 visited.append((y+1,x))
-                addWalls(y-1,x, walls)
+                addWalls(y-1,x)
             
             if (maze[y+1][x] in visited and maze[y-1][x] not in visited):
                 maze[y][x] = ' '
                 maze[y-1][x] = ' '
                 visited.append((y,x))
                 visited.append((y-1,x))
-                addWalls(y+1,x, walls)
+                addWalls(y+1,x)
 
         walls.remove((y,x))
 
     
     writeToFile(maze)
 
-def addWalls(y, x, walls):
+def addWalls(y, x):
     if (x - 1 >= 0):
         walls.append((y,x-1))
-    if (x + 1 < width-1):
+    if (x + 1 <= width-1):
         walls.append((y, x+1))
-    if (y + 1 < height-1):
+    if (y + 1 <= height-1):
         walls.append((y+1, x))
     if (y - 1 >= 0):
         walls.append((y-1, x))
