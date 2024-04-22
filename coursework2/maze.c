@@ -263,13 +263,8 @@ int main(int argc, char *argv[]){
         printf("Input: ");
         scanf(" %c", &userInput);
 
-        // Quit
-        if (tolower(userInput) == 'q'){
-            break;
-        }
-
         // View maze
-        else if (tolower(userInput) == 'm'){
+        if (tolower(userInput) == 'm'){
             viewMaze(maze);
         }
         
